@@ -1,0 +1,148 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-10-27T10:03:03.082Z",
+    "end": "2025-10-27T10:03:03.808Z",
+    "duration": 726,
+    "testsRegistered": 3,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 2,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "98dea5bf-54ae-42ec-8fad-3c375e67803a",
+      "title": "",
+      "fullFile": "cypress\\e2e\\workflow.cy.js",
+      "file": "cypress\\e2e\\workflow.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "493c5525-a123-4646-adfa-7e05404c3126",
+          "title": "Workflow tests - placeholders for pre-approval, inspection, verification, approval",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "pre-approval officer recommends approval",
+              "fullTitle": "Workflow tests - placeholders for pre-approval, inspection, verification, approval pre-approval officer recommends approval",
+              "timedOut": null,
+              "duration": 513,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// simulate pre-approval officer flow\ncy.visit('/admin/login');\ncy.get('#email').type('preapproval_officer@example.com');\ncy.get('#password').type('OfficerP@ss1');\ncy.get('button[type=submit]').click();\ncy.wait('@getPreapprovalTasks');\ncy.contains('Recommend for Approval').click();\ncy.get('button#submitRecommendation').click();\ncy.contains('Recommendation submitted');",
+              "err": {
+                "message": "Error: An error was thrown while processing a network event: A fixture file could not be found at any of the following paths:\n\n    > cypress\\fixtures\\task_preapproval.json\n    > cypress\\fixtures\\task_preapproval.json.[ext]\n\nCypress looked for these file extensions at the provided path:\n\n    > .json, .js, .coffee, .html, .txt, .csv, .png, .jpg, .jpeg, .gif, .tif, .tiff, .zip\n\nProvide a path to an existing fixture file.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Workflow tests - placeholde...`",
+                "estack": "Error: An error was thrown while processing a network event: A fixture file could not be found at any of the following paths:\n\n    > cypress\\fixtures\\task_preapproval.json\n    > cypress\\fixtures\\task_preapproval.json.[ext]\n\nCypress looked for these file extensions at the provided path:\n\n    > .json, .js, .coffee, .html, .txt, .csv, .png, .jpg, .jpeg, .gif, .tif, .tiff, .zip\n\nProvide a path to an existing fixture file.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Workflow tests - placeholde...`\n    at Object.<anonymous> (<embedded>:2571:245556)\n    at Object.tryCatcher (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\util.js:16:23)\n    at Promise._settlePromiseFromHandler (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\promise.js:512:31)\n    at Promise._settlePromise (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\promise.js:569:18)\n    at Promise._settlePromise0 (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\promise.js:614:10)\n    at Promise._settlePromises (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\promise.js:694:18)\n    at Promise._fulfill (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\promise.js:638:18)\n    at <unknown> (C:\\Users\\Cole\\AppData\\Local\\Cypress\\Cache\\15.5.0\\Cypress\\resources\\app\\node_modules\\bluebird\\js\\release\\nodeback.js:42:21)\n    at s (<embedded>:251:108692)\n    at D.<anonymous> (<embedded>:2565:172116)\n    at D.emit (node:events:519:28)\n    at D._finish (<embedded>:2565:173046)\n    at d (<embedded>:2565:172437)\n    at D._processSimple2 (<embedded>:2565:178203)\n    at <unknown> (<embedded>:2565:178056)\n    at D._stat2 (<embedded>:2565:179121)\n    at <unknown> (<embedded>:2565:178968)\n    at s (<embedded>:1096:27266)\n    at s (<embedded>:251:108692)\n    at r (<embedded>:2636:13701)\n    at FSReqCallback.oncomplete (node:fs:197:21)",
+                "diff": null
+              },
+              "uuid": "1faf32d6-dce5-4f12-b9ea-cbe37ee32475",
+              "parentUUID": "493c5525-a123-4646-adfa-7e05404c3126",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "inspector completes inspection and uploads report",
+              "fullTitle": "Workflow tests - placeholders for pre-approval, inspection, verification, approval inspector completes inspection and uploads report",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/mobile');\n// mobile login placeholder\ncy.get('#email').type('inspector@example.com');\ncy.get('#password').type('InspectorP@ss1');\ncy.get('button[type=submit]').click();\n// accept task\ncy.contains('Assigned Tasks').click();\ncy.contains('Start Inspection').click();\n// emulate GPS capture - app should have placeholder field for coords\ncy.get('#startGps').should('exist');\ncy.get('#endGps').should('exist');\ncy.get('#uploadReport').attachFile('SitePlan_sample.pdf');\ncy.get('button#submitInspection').click();\ncy.contains('Inspection report submitted');",
+              "err": {},
+              "uuid": "9959288e-5a02-4e45-b4b8-5304a1b1464d",
+              "parentUUID": "493c5525-a123-4646-adfa-7e05404c3126",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "approver approves and license is generated",
+              "fullTitle": "Workflow tests - placeholders for pre-approval, inspection, verification, approval approver approves and license is generated",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/admin/login');\ncy.get('#email').type('approver@example.com');\ncy.get('#password').type('ApproverP@ss1');\ncy.get('button[type=submit]').click();\ncy.contains('Pending Approvals').click();\ncy.contains('Approve').click();\ncy.get('button#confirmApprove').click();\ncy.wait('@approveApplication');\ncy.contains('License generated');",
+              "err": {},
+              "uuid": "8e77d339-9f20-4b24-9e74-bd0953d7c8a1",
+              "parentUUID": "493c5525-a123-4646-adfa-7e05404c3126",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "1faf32d6-dce5-4f12-b9ea-cbe37ee32475"
+          ],
+          "pending": [],
+          "skipped": [
+            "9959288e-5a02-4e45-b4b8-5304a1b1464d",
+            "8e77d339-9f20-4b24-9e74-bd0953d7c8a1"
+          ],
+          "duration": 513,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

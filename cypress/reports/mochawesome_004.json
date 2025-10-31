@@ -1,0 +1,132 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2025-10-27T10:02:43.197Z",
+    "end": "2025-10-27T10:02:57.456Z",
+    "duration": 14259,
+    "testsRegistered": 2,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "001923f8-30f1-4ec1-83f9-7e2d1d53d253",
+      "title": "",
+      "fullFile": "cypress\\e2e\\tracking.cy.js",
+      "file": "cypress\\e2e\\tracking.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9d357fa5-dc50-4fb1-ad48-db224234c852",
+          "title": "Tracking tests - placeholder selectors",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "tracks application by valid reference",
+              "fullTitle": "Tracking tests - placeholder selectors tracks application by valid reference",
+              "timedOut": null,
+              "duration": 7640,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/track');\ncy.get('#applicationRef').type('SOME-REF-123');\ncy.get('button#trackSearch').click();\ncy.contains('Application under processing').should('exist');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#applicationRef`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#applicationRef`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/tracking.cy.js:5:7)",
+                "diff": null
+              },
+              "uuid": "2fd78700-b75d-4ddf-b010-1698a043c104",
+              "parentUUID": "9d357fa5-dc50-4fb1-ad48-db224234c852",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "shows message for invalid reference",
+              "fullTitle": "Tracking tests - placeholder selectors shows message for invalid reference",
+              "timedOut": null,
+              "duration": 6303,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/track');\ncy.get('#applicationRef').type('INVALID-REF-999');\ncy.get('button#trackSearch').click();\ncy.contains('Reference not found').should('exist');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#applicationRef`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#applicationRef`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/tracking.cy.js:12:7)",
+                "diff": null
+              },
+              "uuid": "9fa7ce03-948b-46ec-9139-6d7f9dc3786f",
+              "parentUUID": "9d357fa5-dc50-4fb1-ad48-db224234c852",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "2fd78700-b75d-4ddf-b010-1698a043c104",
+            "9fa7ce03-948b-46ec-9139-6d7f9dc3786f"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 13943,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

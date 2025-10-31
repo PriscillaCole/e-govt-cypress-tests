@@ -1,0 +1,28 @@
+{
+  "baseUrl": "https://test.maaf.go.ug",
+  "individual": {
+    "nationality": "Uganda",
+    "nin": "CF790123456789",
+    "dob": "1992-05-14",
+    "username": "435",
+    "password": "@HMw4X5AukfPuqeP"
+  },
+  "nonIndividual": {
+    "brn": "BRN-12345678",
+    "companyName": "Test Aquaculture Ltd",
+    "email": "company_uat@example.com",
+    "password": "CompanyP@ss123"
+  },
+  "ninData":{
+  "lastname": "Okello",
+  "firstname": "Peter",
+  "givenname": "James",
+  "sex": "Male",
+  "dob": "1990-01-01"
+},
+  "sampleFiles": {
+    "eia": "EIA_sample.pdf",
+    "sitePlan": "SitePlan_sample.pdf"
+  },
+  "prn": "PRN1234567890"
+}

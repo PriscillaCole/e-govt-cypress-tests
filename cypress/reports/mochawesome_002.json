@@ -1,0 +1,247 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 0,
+    "pending": 0,
+    "failures": 7,
+    "start": "2025-10-27T10:00:30.644Z",
+    "end": "2025-10-27T10:01:25.667Z",
+    "duration": 55023,
+    "testsRegistered": 7,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "f272d744-b50a-4839-af43-8942254eed48",
+      "title": "",
+      "fullFile": "cypress\\e2e\\authentication.cy.js",
+      "file": "cypress\\e2e\\authentication.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "278682a9-c4d0-43a4-87c9-c123c2105590",
+          "title": "Authentication and Account Creation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "logs in successfully with valid credentials",
+              "fullTitle": "Authentication and Account Creation Tests logs in successfully with valid credentials",
+              "timedOut": null,
+              "duration": 7893,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\ncy.get('#email').type(_testData.default.individual.email);\ncy.get('#password').type(_testData.default.individual.password);\ncy.get('button[type=submit]').click();\ncy.url().should('include', '/dashboard');\ncy.contains('Welcome to the e-Services Portal', {\n  timeout: 10000\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:61:3)",
+                "diff": null
+              },
+              "uuid": "13a294f5-9eea-4014-ab1d-3b0c1bb11f57",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "shows error for invalid credentials and clears fields",
+              "fullTitle": "Authentication and Account Creation Tests shows error for invalid credentials and clears fields",
+              "timedOut": null,
+              "duration": 5576,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\ncy.get('#email').type('wronguser@example.com');\ncy.get('#password').type('wrongpassword');\ncy.get('button[type=submit]').click();\ncy.contains('Username or Password are not valid', {\n  timeout: 10000\n});\ncy.get('#email').should('have.value', '');\ncy.get('#password').should('have.value', '');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:70:3)",
+                "diff": null
+              },
+              "uuid": "4b2b6597-b2f4-415e-be79-f11af2125dcb",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "locks account after maximum failed login attempts",
+              "fullTitle": "Authentication and Account Creation Tests locks account after maximum failed login attempts",
+              "timedOut": null,
+              "duration": 6597,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\nfor (let i = 0; i < 3; i++) {\n  cy.get('#email').type('lockeduser@example.com');\n  cy.get('#password').type('wrongpassword');\n  cy.get('button[type=submit]').click();\n  cy.wait(500);\n}\ncy.contains('Your account has been locked. Please contact your MDA help desk for assistance.', {\n  timeout: 10000\n});\ncy.url().should('eq', 'https://www.agriculture.go.ug/');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#email`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:81:3)",
+                "diff": null
+              },
+              "uuid": "eb679f8b-e9bc-487c-9b5c-1a9062ee1b30",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "creates an individual account successfully",
+              "fullTitle": "Authentication and Account Creation Tests creates an individual account successfully",
+              "timedOut": null,
+              "duration": 5783,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/register');\ncy.get('#accountType').select('Individual');\ncy.get('#nationality').select('Uganda');\ncy.get('#nin').type(_testData.default.individual.nin);\ncy.get('#dob').type(_testData.default.individual.dob);\ncy.get('#email').type(_testData.default.individual.email);\ncy.get('#telephone').type('0772123456');\ncy.get('#password').type(_testData.default.individual.password);\ncy.get('#confirmPassword').type(_testData.default.individual.password);\ncy.get('button#createAccount').click();\ncy.contains('Your account has been created successfully', {\n  timeout: 10000\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:94:3)",
+                "diff": null
+              },
+              "uuid": "39826b92-1757-4aec-9d49-e13b4f89517c",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "shows error for invalid NIN during individual account creation",
+              "fullTitle": "Authentication and Account Creation Tests shows error for invalid NIN during individual account creation",
+              "timedOut": null,
+              "duration": 5435,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/register');\ncy.get('#accountType').select('Individual');\ncy.get('#nationality').select('Uganda');\ncy.get('#nin').type('INVALIDNIN123');\ncy.get('#dob').type('1990-01-01');\ncy.get('#email').type('baduser@example.com');\ncy.get('#password').type('WeakPass123!');\ncy.get('#confirmPassword').type('WeakPass123!');\ncy.get('button#createAccount').click();\ncy.contains('Dear client, the NIN/work permit/Passport you have entered is invalid', {\n  timeout: 10000\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:108:3)",
+                "diff": null
+              },
+              "uuid": "98c5a2e6-ea90-4aea-99e7-d0e8052dc602",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "creates a non-individual account successfully",
+              "fullTitle": "Authentication and Account Creation Tests creates a non-individual account successfully",
+              "timedOut": null,
+              "duration": 16691,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/register');\ncy.get('#accountType').select('Non-Individual');\ncy.get('#countryOfRegistration').select('Uganda');\ncy.get('#tin').type(_testData.default.company.tin);\ncy.get('#companyRegistrationNumber').type('CRN123456');\ncy.get('#email').type(_testData.default.company.email);\ncy.get('#telephone').type('0701234567');\ncy.get('#password').type(_testData.default.company.password);\ncy.get('#confirmPassword').type(_testData.default.company.password);\ncy.get('button#createAccount').click();\ncy.contains('Your company account has been created successfully', {\n  timeout: 10000\n});",
+              "err": {
+                "message": "TypeError: Cannot read properties of undefined (reading 'tin')",
+                "estack": "TypeError: Cannot read properties of undefined (reading 'tin')\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:125:37)\n    at runnable.fn (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:145850:19)\n    at callFn (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:164942:21)\n    at Runnable.run (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:164929:7)\n    at <unknown> (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:171024:30)\n    at PassThroughHandlerContext.finallyHandler (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:4042:23)\n    at PassThroughHandlerContext.tryCatcher (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://coding.dev.go.ug/__cypress/runner/cypress_runner.js:1546:18)",
+                "diff": null
+              },
+              "uuid": "f6982e96-6efb-4cec-b126-d42936149f2d",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "shows error for invalid TIN during non-individual account creation",
+              "fullTitle": "Authentication and Account Creation Tests shows error for invalid TIN during non-individual account creation",
+              "timedOut": null,
+              "duration": 5966,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/register');\ncy.get('#accountType').select('Non-Individual');\ncy.get('#countryOfRegistration').select('Uganda');\ncy.get('#tin').type('INVALIDTIN001');\ncy.get('#companyRegistrationNumber').type('CRN999999');\ncy.get('#email').type('wrongcompany@example.com');\ncy.get('#password').type('TestPass123!');\ncy.get('#confirmPassword').type('TestPass123!');\ncy.get('button#createAccount').click();\ncy.contains('Dear client, the TIN you have entered is invalid', {\n  timeout: 10000\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#accountType`, but never found it.\n    at Context.eval (webpack:///./cypress/e2e/authentication.cy.js:137:3)",
+                "diff": null
+              },
+              "uuid": "0a79c863-1308-4baf-b2d0-a0177f337801",
+              "parentUUID": "278682a9-c4d0-43a4-87c9-c123c2105590",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "13a294f5-9eea-4014-ab1d-3b0c1bb11f57",
+            "4b2b6597-b2f4-415e-be79-f11af2125dcb",
+            "eb679f8b-e9bc-487c-9b5c-1a9062ee1b30",
+            "39826b92-1757-4aec-9d49-e13b4f89517c",
+            "98c5a2e6-ea90-4aea-99e7-d0e8052dc602",
+            "f6982e96-6efb-4cec-b126-d42936149f2d",
+            "0a79c863-1308-4baf-b2d0-a0177f337801"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 53941,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}
