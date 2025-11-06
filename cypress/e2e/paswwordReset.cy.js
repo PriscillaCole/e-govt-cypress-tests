@@ -50,7 +50,8 @@ describe('Full Registration + Password Reset Flow', () => {
         const body = email.body || email.html;
 
         // Robust username extraction
-        const usernameMatch = body.match(/Username:<\/?strong>\s*(\w+)/i);
+        const usernameMatch = body.match(/<strong[^>]*>Username:<\/strong>\s*([A-Za-z0-9_\-]+)/i);
+console.log(usernameMatch);
 
         expect(usernameMatch, 'Username extracted from email').to.not.be.null;
 
@@ -71,6 +72,8 @@ describe('Full Registration + Password Reset Flow', () => {
           .then(ms => ms.waitForLatestEmail(inboxId, 120000))
           .then(resetEmail => {
             const resetBody = resetEmail.body || resetEmail.html;
+
+            console.log('Password reset email body:', resetBody);
             const resetLinkMatch = resetBody.match(/https?:\/\/[^\s"]+/);
             expect(resetLinkMatch, 'Reset link extracted').to.not.be.null;
             const resetLink = resetLinkMatch[0];
