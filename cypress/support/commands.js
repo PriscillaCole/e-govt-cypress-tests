@@ -1,6 +1,8 @@
-// Custom Cypress commands for Aquaculture Licensing tests
-import 'cypress-file-upload'
+/// <reference types="cypress" />
+/// <reference types="cypress-mailslurp" />
 
+
+// Navigate to login page
 Cypress.Commands.add('visitLoginPage', () => {
   cy.visit('/login')
   cy.get('.fr.ml10.brand-bg-1.radius-5.p10', { timeout: 10000 })
@@ -8,12 +10,42 @@ Cypress.Commands.add('visitLoginPage', () => {
     .click()
 })
 
+//Navigate to registration page
+Cypress.Commands.add('visitRegistrationPage', () => {
+  cy.visit('/register')
+  cy.get('.fr.ml10.brand-bg-2.radius-5.p10', { timeout: 10000 })
+    .should('be.visible')
+    .click()
+    
+})
+
 // Fill in login credentials
 Cypress.Commands.add('fillLoginForm', (username, password) => {
   cy.get('#frmUsername').clear().type(username)
   cy.get('#frmPassword').clear().type(password)
   cy.get('#login-button').click()
+  cy.url().should('include', '/dashboard')
 })
+
+// Clear all emails from a MailSlurp inbox
+Cypress.Commands.add('clearInbox', (inboxId) => {
+  if (!inboxId) {
+    throw new Error('Inbox ID is required for cy.clearInbox()');
+  }
+
+  cy.mailslurp().then(ms => {
+    return ms.getEmails(inboxId).then(existingEmails => {
+      if (existingEmails.length > 0) {
+        cy.log(`Deleting ${existingEmails.length} emails from inbox...`);
+        return ms.inboxController.deleteAllInboxEmails({ inboxId });
+      } else {
+        cy.log('Inbox is already empty, no deletion needed.');
+        return Promise.resolve();
+      }
+    });
+  });
+});
+
 
 
 // Mock API for Ugandan users

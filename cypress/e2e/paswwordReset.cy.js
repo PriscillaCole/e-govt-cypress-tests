@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 /// <reference types="cypress-mailslurp" />
 
+//happy path password reset flow with inbox cleanup before OTP email is sent
 describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
   const username = 'Robles';
   const newPassword = 'NewStrongPass123456!';
@@ -13,18 +14,8 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
       throw new Error('MAILSLURP_INBOX_ID is not set!');
     }
 
-    cy.mailslurp().then(ms => {
-      // --- Step 0: Clear inbox before triggering password reset ---
-      return ms.getEmails(inboxId).then(existingEmails => {
-        if (existingEmails.length > 0) {
-          cy.log(`Inbox has ${existingEmails.length} emails, deleting...`);
-          return ms.inboxController.deleteAllInboxEmails({ inboxId });
-        } else {
-          cy.log('Inbox is already empty.');
-          return Promise.resolve();
-        }
-      });
-    });
+    //clear inbox before starting the flow
+    cy.clearInbox(inboxId);
 
     // --- Step 1: Trigger Forgot Password ---
     cy.visit('/login');
@@ -48,17 +39,8 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
         cy.visit(resetLink);
 
         // --- Step 3: Clear inbox before waiting for OTP ---
-        cy.mailslurp().then(ms => {
-          return ms.getEmails(inboxId).then(existingEmails => {
-            if (existingEmails.length > 0) {
-              cy.log(`Deleting ${existingEmails.length} emails before OTP...`);
-              return ms.inboxController.deleteAllInboxEmails({ inboxId });
-            } else {
-              cy.log('Inbox is already empty before OTP.');
-              return Promise.resolve();
-            }
-          });
-        }).then(() => {
+        cy.clearInbox(inboxId).then(() => {
+
           // --- Step 4: Wait for OTP email ---
           cy.mailslurp().then(ms => ms.waitForLatestEmail(inboxId, 120000))
             .then(otpEmail => {
@@ -70,6 +52,7 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
             const otp = otpMatch[1];
             cy.log(`OTP detected: ${otp}`);
 
+            //enter otp and new password
             cy.get('#pwdrecovery_otp', { timeout: 20000 }).should('be.visible').type(otp);
             cy.get('#pwdrecovery_new_password', { timeout: 20000 }).should('be.visible').type(newPassword);
 
@@ -81,9 +64,11 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
               // --- Step 6: Login with new password ---
               cy.visitLoginPage()
               cy.fillLoginForm(username, newPassword)
-              cy.url().should('include', '/dashboard')
+              
             });
         });
       });
   });
 });
+
+
