@@ -24,7 +24,7 @@ module.exports = defineConfig({
   },
    env: {
     MAILSLURP_API_KEY: '50a2f0376386e7efce5e74a2fd4aed81b66c431ace7b4b1efdda111c6b5a8753',
-     MAILSLURP_INBOX_ID: '53491e36-26d3-44ca-92df-2f05dbd7eb5a',
-      MAILSLURP_EMAIL: '53491e36-26d3-44ca-92df-2f05dbd7eb5a@mailslurp.biz'
+     MAILSLURP_INBOX_ID: 'd17fc06d-7bea-4b30-aa4a-c0410d470191',
+      MAILSLURP_EMAIL: 'd17fc06d-7bea-4b30-aa4a-c0410d470191@mailslurp.biz'
   }
 })
