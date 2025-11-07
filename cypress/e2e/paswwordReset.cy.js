@@ -1,12 +1,13 @@
 /// <reference types="cypress" />
 /// <reference types="cypress-mailslurp" />
 
-//happy path password reset flow with inbox cleanup before OTP email is sent
+
 describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
   const username = 'Robles';
-  const newPassword = 'NewStrongPass123456!';
+  const newPassword = 'NewStrongPass124!';
   const inboxId = Cypress.env('MAILSLURP_INBOX_ID');
 
+  //1.Happy Path: Successful Password Reset
   it('resets password successfully', () => {
     Cypress.config('defaultCommandTimeout', 60000); // allow more time
 
@@ -26,17 +27,7 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
     cy.contains('An email will be sent', { timeout: 10000 }).should('be.visible');
 
     // --- Step 2: Wait for the password reset email ---
-    cy.mailslurp().then(ms => ms.waitForLatestEmail(inboxId, 120000))
-      .then(resetEmail => {
-        const resetBody = resetEmail.textBody || resetEmail.body || resetEmail.html;
-        const resetLinkMatch = resetBody.match(
-          /https:\/\/coding\.dev\.go\.ug\/maaif\.aquaculture\/portal\/user\/forgot-password\/verify\/[^\s"]+/
-        );
-        expect(resetLinkMatch, 'Reset link extracted').to.not.be.null;
-
-        const resetLink = resetLinkMatch[0].trim();
-        cy.log(`Visiting reset link: ${resetLink}`);
-        cy.visit(resetLink);
+    cy.extractResetLink(inboxId);
 
         // --- Step 3: Clear inbox before waiting for OTP ---
         cy.clearInbox(inboxId).then(() => {
@@ -67,8 +58,56 @@ describe('Password Reset Flow (Inbox Cleanup Before OTP)', () => {
               
             });
         });
+     
+  });
+
+  //2. Negative Test Cases
+  it('shows error when username does not exist', () => {
+    cy.visit('/login');
+    cy.get('.fr.ml10.brand-bg-1.radius-5.p10').click();
+    cy.get('#login-forgot-password').click();
+    cy.get('#frmUsername').type('NonExistentUser');
+    cy.get('input.forgot-password-btn').click();
+
+    cy.contains('Invalid', { timeout: 10000 }).should('be.visible');
+  });
+
+  it('fails with expired reset link', () => {
+    const expiredLink = 'https://coding.dev.go.ug/maaif.aquaculture/portal/user/forgot-password/verify/k/33-8d4fa28cc21c5aa9be8afdd3acb06429/t/e5b39143ad5d0f60514888a4cf0465fd/?sd=47dca3740cf68e8111d5262ab37cbcd5&';
+    cy.visit(expiredLink, { failOnStatusCode: false });
+
+    cy.contains('invalid', { timeout: 10000 }).should('be.visible');
+  });
+
+
+  it('shows error for wrong OTP', () => {
+    // Trigger password reset as before
+    const username = 'Robles';
+    const wrongOtp = '123456'; // definitely incorrect
+
+    cy.visit('/login');
+    cy.get('.fr.ml10.brand-bg-1.radius-5.p10').click();
+    cy.get('#login-forgot-password').click();
+    cy.get('#frmUsername').type(username);
+    cy.get('input.forgot-password-btn').click();
+
+    cy.clearInbox(inboxId);
+    // Wait for reset page (use your working method)
+    cy.extractResetLink(Cypress.env('MAILSLURP_INBOX_ID'))
+      .then(() => {
+
+        cy.get('#pwdrecovery_otp').type(wrongOtp);
+        cy.get('#pwdrecovery_new_password').type('NewPassword124!');
+        cy.get('#pwdrecovery_confirm_new_password').type('NewPassword124!');
+        cy.get('input[title="Set new password"]').click();
+
+        cy.contains('not valid', { timeout: 10000 }).should('be.visible');
       });
   });
+
+
 });
+
+
 
 

@@ -46,6 +46,32 @@ Cypress.Commands.add('clearInbox', (inboxId) => {
   });
 });
 
+//Get reset link from email body
+Cypress.Commands.add('extractResetLink', (inboxId) => {
+  cy.mailslurp().then(ms => ms.waitForLatestEmail(inboxId, 120000))
+      .then(resetEmail => {
+        const resetBody = resetEmail.textBody || resetEmail.body || resetEmail.html;
+        const resetLinkMatch = resetBody.match(
+          /https:\/\/coding\.dev\.go\.ug\/maaif\.aquaculture\/portal\/user\/forgot-password\/verify\/[^\s"]+/
+        );
+        expect(resetLinkMatch, 'Reset link extracted').to.not.be.null;
+
+        const resetLink = resetLinkMatch[0].trim();
+        cy.log(`Visiting reset link: ${resetLink}`);
+        cy.visit(resetLink);
+      });
+});
+
+
+//Set new password after reset
+Cypress.Commands.add('setNewPassword', (otp, newPassword) => {
+  cy.get('#pwdrecovery_otp', { timeout: 20000 }).should('be.visible').type(otp);
+  cy.get('#pwdrecovery_new_password', { timeout: 20000 }).should('be.visible').type(newPassword);
+  cy.get('#pwdrecovery_confirm_new_password').type(newPassword);
+  cy.get('input[title="Set new password"]').click();
+  
+});
+
 
 
 // Mock API for Ugandan users
